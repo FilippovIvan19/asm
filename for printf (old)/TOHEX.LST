@@ -1,0 +1,108 @@
+Turbo Assembler	 Version 4.1	    02/27/19 20:29:32	    Page 1
+tohex.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4	      =0EDA		     X = 3802d
+      5
+      6				     org 100h
+      7
+      8	0100			     start:
+      9	0100  B8 B800				     mov ax, 0b800h
+     10	0103  8E C0				     mov es, ax
+     11	0105  BB 01E0				     mov bx, 3*80*2
+     12	0108  B1 0C				     mov cl, 12
+     13	010A  BA 0EDA				     mov dx, X
+     14	010D  E8 0003				     call tohex
+     15	0110  EB 33 90				     jmp end_prog
+     16
+     17				     ;-----------------------------------------------------------------------------
+     18				     ;	     write number from dx in hex format
+     19				     ;	     entry:  DX	- number
+     20				     ;	     exit    string of hex digits in video memory
+     21				     ;	     destr   AX	BX CX DX
+     22				     ;-----------------------------------------------------------------------------
+     23	0113				     tohex proc
+     24	0113				     for_1:
+     25	0113  B8 000F				     mov ax, 000fh
+     26	0116  D3 E0				     shl ax, cl
+     27	0118  23 C2				     and ax, dx
+     28	011A  D3 E8				     shr ax, cl
+     29
+     30	011C  04 30				     add al, '0'
+     31	011E  26: 88 07				     mov byte ptr es:[bx], al
+     32	0121  26: C6 47	01 4E			     mov byte ptr es:[bx+1], 4eh
+     33
+     34	0126  B4 00				     mov ah, 0
+     35	0128  80 C4 39				     add ah, '9'
+     36	012B  3A E0				     cmp ah, al
+     37	012D  7C 03				     jl	print_1
+     38	012F  EB 07 90				     jmp end_print
+     39	0132				     print_1:
+     40	0132  B8 0007				     mov ax, 'A' - '9' - 1
+     41	0135  26: 01 07				     add es:[bx], ax
+     42
+     43
+     44	0138				     end_print:
+     45	0138  83 C3 02				     add bx, 2
+     46	013B  80 E9 04				     sub cl, 4
+     47	013E  B5 00				     mov ch, 0
+     48	0140  3A E9				     cmp ch, cl
+     49	0142  7E CF				     jle for_1
+     50	0144  C3				     ret
+     51	0145					     endp
+     52
+     53
+     54	0145				     end_prog:
+     55	0145  B8 4C00				     mov ax, 4c00h
+     56	0148  CD 21				     int 21h
+     57
+Turbo Assembler	 Version 4.1	    02/27/19 20:29:32	    Page 2
+tohex.asm
+
+
+
+     58
+     59
+     60				     end start
+Turbo Assembler	 Version 4.1	    02/27/19 20:29:32	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/27/19"
+??FILENAME			  Text	 "tohex	  "
+??TIME				  Text	 "20:29:32"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 TOHEX
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+END_PRINT			  Near	 DGROUP:0138
+END_PROG			  Near	 DGROUP:0145
+FOR_1				  Near	 DGROUP:0113
+PRINT_1				  Near	 DGROUP:0132
+START				  Near	 DGROUP:0100
+TOHEX				  Near	 DGROUP:0113
+X				  Number 0EDA
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  014A Word	  Public  CODE
+

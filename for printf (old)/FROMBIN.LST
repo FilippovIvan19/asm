@@ -1,0 +1,90 @@
+Turbo Assembler	 Version 4.1	    02/25/19 15:02:09	    Page 1
+frombin.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4				     org 100h
+      5
+      6	0100			     start:
+      7	0100  BB 0000r				     mov bx, offset val
+      8	0103  E8 0003				     call frombin
+      9	0106  EB 19 90				     jmp end_prog
+     10
+     11
+     12
+     13				     ;-----------------------------------------------------------------------------
+     14				     ;	     makes a numder from string	of 0/1
+     15				     ;	     entry:  BX	- str adress
+     16				     ;	     exit:   DX	- number
+     17				     ;	     destr:  AX	BX CX
+     18				     ;-----------------------------------------------------------------------------
+     19	0109				     frombin proc
+     20	0109  B9 0010				     mov cx, 16d
+     21	010C  BA 0000				     mov dx, 0
+     22
+     23	010F				     for_1:
+     24	010F  8A 07				     mov byte ptr al, [bx]
+     25	0111  2C 30				     sub al, '0'
+     26	0113  B4 00				     mov ah, 0
+     27	0115  D1 E2				     shl dx, 1
+     28	0117  03 D0				     add dx, ax
+     29
+     30	0119  43				     inc bx
+     31	011A  49				     dec cx
+     32	011B  83 F9 00				     cmp cx, 0
+     33
+     34	011E  75 EF				     jne for_1
+     35	0120  C3				     ret
+     36	0121					     endp
+     37
+     38
+     39
+     40	0121				     end_prog:
+     41	0121  B8 4C00				     mov ax, 4c00h
+     42	0124  CD 21				     int 21h
+     43
+     44	0126			     .data
+     45	0000  31 30 30 30 30 30	31+  val	     db	'1000001000011111$'
+     46	      30 30 30 30 31 31	31+
+     47	      31 31 24
+     48
+     49				     end start
+Turbo Assembler	 Version 4.1	    02/25/19 15:02:09	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/25/19"
+??FILENAME			  Text	 "frombin "
+??TIME				  Text	 "15:02:09"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _DATA
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 FROMBIN
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+END_PROG			  Near	 DGROUP:0121
+FOR_1				  Near	 DGROUP:010F
+FROMBIN				  Near	 DGROUP:0109
+START				  Near	 DGROUP:0100
+VAL				  Byte	 DGROUP:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0011 Word	  Public  DATA
+  _TEXT				  16  0126 Word	  Public  CODE
+

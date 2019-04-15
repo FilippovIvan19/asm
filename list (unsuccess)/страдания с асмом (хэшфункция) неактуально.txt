@@ -1,0 +1,210 @@
+void find_word(List_of_list *hash_table, const char *word, int hash_func_num)
+{
+    int hash = calc_hash((char*)word, hash_func_num);
+        
+
+    /*int table_size = hash_table->count;    
+    for (int pos = 1; pos <= table_size; ++pos)
+        if (hash_table->number[pos] == hash)
+        {
+            List* cur_list = hash_table->info[pos];
+            int ls_size = cur_list->count;
+
+            for (int ls_pos = 1; ls_pos <= ls_size; ++ls_pos)
+                if ( !strcmp(cur_list->info[ls_pos], word) )
+                    return;
+
+            break;
+        }*/
+    
+
+    
+
+    int pos = -1;
+    __asm__(".intel_syntax noprefix\n\t"
+                
+                "cld\n\t"
+                
+                "mov ebx, ecx\n\t"
+                
+                "repne scasd\n\t"
+
+                "sub ebx, ecx\n\t"
+                
+                ".att_syntax prefix\n\t"
+                :"=b"(pos)
+                :"D"(&(hash_table->number[1])), "c"(hash_table->count), "a"(hash)
+                :
+                );
+
+    if (hash_table->number[pos] == hash)
+    {
+        List* cur_list = hash_table->info[pos];
+        int ls_size = cur_list->count;
+
+        for (int ls_pos = 1; ls_pos <= ls_size; ++ls_pos)
+            if ( !strcmp(cur_list->info[ls_pos], word) )
+            {
+                //++find_num;
+                //printf("%d ", find_num);
+                return;
+            }
+    }
+    
+
+            
+        
+
+    printf("ERROR WORD %s WASN'T FOUND\n", word);
+    
+}
+
+
+
+
+
+
+    __asm__(".intel_syntax noprefix\n\t"
+                "\n\t"
+                "\n\t"
+                "mov eax, 0\n\t"
+                "mov edx, 0\n\t"
+                "\n\t"
+                "label:\n\t"
+                "\n\t"
+                "mov dl, byte ptr [rcx]\n\t"
+                "cmp dl, 0\n\t"
+                "je end\n\t"
+                "\n\t"
+                "mov ebx, eax\n\t"
+                "shl ebx, 5\n\t"
+                "add eax, ebx\n\t"
+                "add eax, edx\n\t"
+                "inc rcx\n\t"
+                "\n\t"
+                "jmp label\n\t"
+                "end:\n\t"
+                "\n\t"
+                ".att_syntax prefix\n\t"
+                :"=eax"(sum)
+                :"rcx"(str)
+                :"rbx", "edx"
+                );
+
+
+
+
+    __asm__(".intel_syntax noprefix\n\t"
+                //"\n\t"
+                //"\n\t"
+                "mov edx, 0\n\t"
+                "LOOP:\n\t"
+                //"\n\t"
+                "mov ebx, eax\n\t"
+                "shl ebx, 5\n\t"
+                "add eax, ebx\n\t"
+                "mov dl, [rsi]\n\t"
+                "add eax, edx\n\t"
+                "inc rsi\n\t"
+                //"\n\t"
+                "loop LOOP\n\t"
+                //"\n\t"
+                //"\n\t"
+                ".att_syntax prefix\n\t"
+                :"=a"(sum)
+                :"a"(sum), "c"(len), "rsi"(str)
+                :"rbx", "rdx"
+                );
+
+
+
+
+    /*__asm__(".intel_syntax noprefix\n\t"
+                
+                "mov eax, 0\n\t"
+                "mov edx, 0\n\t"
+                
+                "label:\n\t"
+                
+                "mov dl, byte ptr [rcx]\n\t"
+                "cmp dl, 0\n\t"
+                "je end\n\t"
+                
+                "mov ebx, eax\n\t"
+                "shl ebx, 5\n\t"
+                "add eax, ebx\n\t"
+                "add eax, edx\n\t"
+                "inc rcx\n\t"
+                "jmp label\n\t"
+                "end:\n\t"
+                
+                ".att_syntax prefix\n\t"
+                :"=a"(sum)
+                :"c"(str)
+                :"ebx", "edx"
+                );*/
+
+
+
+
+void find_word(List_of_list *hash_table, const char *word, int hash_func_num)
+{
+    int hash = calc_hash((char*)word, hash_func_num);
+        
+
+    /*int table_size = hash_table->count;    
+    for (int pos = 1; pos <= table_size; ++pos)
+        if (hash_table->number[pos] == hash)
+        {
+            List* cur_list = hash_table->info[pos];
+            int ls_size = cur_list->count;
+
+            for (int ls_pos = 1; ls_pos <= ls_size; ++ls_pos)
+                if ( !strcmp(cur_list->info[ls_pos], word) )
+                    return;
+
+            break;
+        }*/
+    
+
+    
+
+    int pos = -1;
+    __asm__(".intel_syntax noprefix\n\t"
+                
+                "cld\n\t"
+                
+                "mov ebx, ecx\n\t"
+                
+                "repne scasd\n\t"
+
+                "sub ebx, ecx\n\t"
+                
+                ".att_syntax prefix\n\t"
+                :"=b"(pos)
+                :"D"(&(hash_table->number[1])), "c"(hash_table->count), "a"(hash)
+                :
+                );
+
+    if (hash_table->number[pos] == hash)
+    {
+        List* cur_list = hash_table->info[pos];
+        int ls_size = cur_list->count;
+
+        for (int ls_pos = 1; ls_pos <= ls_size; ++ls_pos)
+            if ( !strcmp(cur_list->info[ls_pos], word) )
+            {
+                //++find_num;
+                //printf("%d ", find_num);
+                return;
+            }
+    }
+    
+
+            
+        
+
+    printf("ERROR WORD %s WASN'T FOUND\n", word);
+    
+}
+

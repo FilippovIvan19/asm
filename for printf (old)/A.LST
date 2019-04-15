@@ -1,0 +1,192 @@
+Turbo Assembler	 Version 4.1	    02/21/19 22:04:23	    Page 1
+a.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4	      =0001		     X1	= 1
+      5	      =0005		     X2	= 5
+      6	      =0001		     Y1	= 1
+      7	      =0005		     Y2	= 5
+      8
+      9
+     10				     org 100h
+     11
+     12	0100			     start:
+     13	0100  50 55 8B EC C7 46	02+		     push Y2
+     14	      0005 5D
+     15	010A  50 55 8B EC C7 46	02+		     push X2
+     16	      0005 5D
+     17	0114  50 55 8B EC C7 46	02+		     push Y1
+     18	      0001 5D
+     19	011E  50 55 8B EC C7 46	02+		     push X1
+     20	      0001 5D
+     21	0128  E8 0006				     call ramka		     ;ramka(x1,	y1, x2,	y2)
+     22	012B  83 C4 08				     add sp, 4*2
+     23	012E  E9 00A7				     jmp end_prog
+     24
+     25
+     26	0131				     ramka proc
+     27	0131  55				     push bp
+     28	0132  8B EC				     mov bp, sp
+     29
+     30
+     31	0134  B8 B800				     mov ax, 0b800h
+     32	0137  8E C0				     mov es, ax
+     33	0139  B6 A0				     mov dh, 160     ;	  na eto budem delit'
+     34
+     35	013B  8B 46 06				     mov ax, [bp+6]  ;Y1
+     36	013E  8B 4E 04				     mov cx, [bp+4]  ;X1
+     37
+     38	0141  8B D8				     mov bx, ax
+     39	0143  83 EB 01				     sub bx, 1
+     40	0146  8B C3				     mov ax, bx
+     41	0148  F6 E6				     mul dh
+     42	014A  8B D8				     mov bx, ax
+     43	014C  03 D9				     add bx, cx
+     44	014E  03 D9				     add bx, cx
+     45	0150  83 EB 02				     sub bx, 2
+     46	0153  EB 13 90				     jmp for_one
+     47
+     48	0156				     for_two:
+     49	0156  8B 46 08				     mov ax, [bp+8]  ;X2
+     50	0159  8B 4E 04				     mov cx, [bp+4]  ;X1
+     51	015C  D1 E0				     shl ax, 1
+     52	015E  D1 E1				     shl cx, 1
+     53	0160  81 C3 009E			     add bx, 80*2 - 2
+     54	0164  2B D8				     sub bx, ax
+     55	0166  03 D9				     add bx, cx
+     56
+     57
+Turbo Assembler	 Version 4.1	    02/21/19 22:04:23	    Page 2
+a.asm
+
+
+
+     58
+     59
+     60	0168				     for_one:
+     61	0168  26: C7 07	4E21			     mov word ptr es:[bx], 4e21h
+     62
+     63	016D  83 C3 02				     add bx, 2
+     64
+     65	0170  8B C3				     mov ax, bx
+     66	0172  F6 F6				     div dh			     ;ah - mod
+     67
+     68	0174  8A 6E 08				     mov ch, [bp+8]  ;X2
+     69	0177  D0 E5				     shl ch, 1
+     70	0179  3A E5				     cmp ah, ch
+     71	017B  7C EB			     jl	for_one
+     72
+     73	017D  8B 4E 0A				     mov cx, [bp+10] ;Y2
+     74	0180  80 E9 01				     sub cl, 1
+     75	0183  3A C1				     cmp al, cl		     ;??????????ch
+     76	0185  7C CF			     jl	for_two
+     77
+     78
+     79	0187  8A 46 06				     mov al, [bp+6]  ;Y1
+     80	018A  8B 4E 04				     mov cx, [bp+4]  ;X1
+     81	018D  B4 A0				     mov ah, 160d
+     82	018F  F6 E4				     mul ah
+     83	0191  D1 E1				     shl cx, 1
+     84	0193  8B D8				     mov bx, ax
+     85	0195  03 D9				     add bx, cx
+     86
+     87	0197  EB 19 90				     jmp for_three
+     88
+     89
+     90
+     91	019A				     for_four:
+     92	019A  8B 46 04				     mov ax, [bp+4]  ;X1
+     93	019D  8B 4E 08				     mov cx, [bp+8]  ;X2
+     94
+     95	01A0  05 0001				     add ax, 1
+     96	01A3  D1 E0				     shl ax, 1
+     97	01A5  83 E9 01				     sub cx, 1
+     98	01A8  D1 E1				     shl cx, 1
+     99
+    100	01AA  81 C3 009E			     add bx, 80*2 - 2
+    101	01AE  03 D8				     add bx, ax
+    102	01B0  2B D9				     sub bx, cx
+    103
+    104	01B2				     for_three:
+    105	01B2  26: C7 07	4E20			     mov word ptr es:[bx], 4e20h
+    106
+    107	01B7  83 C3 02				     add bx, 2
+    108	01BA  8B C3				     mov ax, bx
+    109	01BC  F6 F6				     div dh
+    110
+    111	01BE  8B 4E 08				     mov cx, [bp+8]		     ;???????????ch
+    112	01C1  80 E9 01				     sub cl, 1
+    113	01C4  D0 E1				     shl cl, 1
+    114	01C6  3A E1				     cmp ah, cl
+Turbo Assembler	 Version 4.1	    02/21/19 22:04:23	    Page 3
+a.asm
+
+
+
+    115	01C8  7C E8			     jl	for_three
+    116
+    117	01CA  8B 4E 0A				     mov cx, [bp+10]
+    118	01CD  80 E9 02				     sub cl, 2
+    119	01D0  3A C1				     cmp al, cl			     ;????????????ch
+    120	01D2  7C C6			     jl	for_four
+    121
+    122	01D4  8B E5				     mov sp, bp
+    123	01D6  5D				     pop bp
+    124	01D7  C3				     ret
+    125	01D8				     endp
+    126
+    127	01D8				     end_prog:
+    128
+    129	01D8  B8 4C00				     mov ax, 4c00h
+    130	01DB  CD 21				     int 21h
+    131
+    132	01DD			     .data
+    133
+    134
+    135				     end start
+Turbo Assembler	 Version 4.1	    02/21/19 22:04:23	    Page 4
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/21/19"
+??FILENAME			  Text	 "a	  "
+??TIME				  Text	 "22:04:23"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _DATA
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 A
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+END_PROG			  Near	 DGROUP:01D8
+FOR_FOUR			  Near	 DGROUP:019A
+FOR_ONE				  Near	 DGROUP:0168
+FOR_THREE			  Near	 DGROUP:01B2
+FOR_TWO				  Near	 DGROUP:0156
+RAMKA				  Near	 DGROUP:0131
+START				  Near	 DGROUP:0100
+X1				  Number 0001
+X2				  Number 0005
+Y1				  Number 0001
+Y2				  Number 0005
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  01DD Word	  Public  CODE
+

@@ -1,0 +1,42 @@
+.model tiny
+.code      
+
+org 100h
+
+start:				
+		;mov bx, offset str_start 
+		lea di, str_start
+		call printf
+		jmp end_prog
+
+
+
+;-----------------------------------------------------------------------------
+;	prints
+;	entry:	
+;	exit:	str on display
+;	destr:	????????????
+;----------------------------------------------------------------------------- 
+	printf proc
+        mov al, '%'
+        cld
+        repne
+        
+        
+        
+        
+        
+        
+    ret
+    endp
+
+                 
+		                        
+	end_prog:
+		mov ax, 4c00h           
+		int 21h                 
+
+.data
+str_start 		db ""meow %d ", 123$"
+
+end start

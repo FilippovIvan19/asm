@@ -1,0 +1,99 @@
+Turbo Assembler	 Version 4.1	    02/27/19 20:28:40	    Page 1
+tobin.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4	      =F0F0		     X = 0f0f0h
+      5
+      6				     org 100h
+      7
+      8	0100			     start:
+      9	0100  B8 B800				     mov ax, 0b800h
+     10	0103  8E C0				     mov es, ax
+     11	0105  BA F0F0				     mov dx, X
+     12
+     13	0108  E8 0003				     call tobin
+     14	010B  EB 2B 90				     jmp end_prog
+     15				     ;-----------------------------------------------------------------------------
+     16				     ;	     write number from dx in bin format
+     17				     ;	     entry:  DX	- number
+     18				     ;	     exit    string of 0/1 in video memory
+     19				     ;	     destr   AX	BX CX DX
+     20				     ;-----------------------------------------------------------------------------
+     21	010E				     tobin proc
+     22
+     23	010E  BB 01E0				     mov bx, 3*80*2
+     24	0111  B9 8000				     mov cx, 128*256
+     25
+     26
+     27	0114				     for_1:
+     28	0114  8B C1				     mov ax, cx
+     29	0116  23 C2				     and ax, dx
+     30	0118  3D 0000				     cmp ax, 0
+     31
+     32
+     33	011B  26: C6 47	01 4E			     mov byte ptr es:[bx+1], 4eh
+     34	0120  26: C6 07	30			     mov byte ptr es:[bx], '0'
+     35	0124  75 03				     jne print_1
+     36	0126  EB 05 90				     jmp end_print
+     37	0129				     print_1:
+     38	0129  26: C6 07	31			     mov byte ptr es:[bx], '1'
+     39
+     40
+     41	012D				     end_print:
+     42	012D  83 C3 02				     add bx, 2
+     43	0130  D1 E9				     shr cx, 1
+     44	0132  83 F9 01				     cmp cx, 1
+     45	0135  7D DD				     jnl for_1
+     46
+     47	0137  C3			     ret
+     48	0138				     endp
+     49
+     50	0138				     end_prog:
+     51	0138  B8 4C00				     mov ax, 4c00h
+     52	013B  CD 21				     int 21h
+     53
+     54
+     55
+     56				     end start
+Turbo Assembler	 Version 4.1	    02/27/19 20:28:40	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/27/19"
+??FILENAME			  Text	 "tobin	  "
+??TIME				  Text	 "20:28:40"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 TOBIN
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+END_PRINT			  Near	 DGROUP:012D
+END_PROG			  Near	 DGROUP:0138
+FOR_1				  Near	 DGROUP:0114
+PRINT_1				  Near	 DGROUP:0129
+START				  Near	 DGROUP:0100
+TOBIN				  Near	 DGROUP:010E
+X				  Number F0F0
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  013D Word	  Public  CODE
+

@@ -1,0 +1,74 @@
+info:
+NULL list
+info:
+0 qwerty asdfg gdfjhdhjbdjbhdf 63teh _df_fth/sh*df 0 0 
+next:
+0 2 3 4 5 0 7 0 
+prev:
+0 0 1 2 3 4 -1 -1 
+capacity: 8
+number: -1
+count: 5
+free: 6
+head: 1
+tail: 5
+info:
+0 qwerty asdfg gdfjhdhjbdjbhdf 63teh _df_fth/sh*df 0 0 
+next:
+0 2 3 4 5 0 7 0 
+prev:
+0 0 1 2 3 4 -1 -1 
+capacity: 8
+number: -1
+count: 5
+free: 6
+head: 1
+tail: 5
+info:
+0 qwerty asdfg gdfjhdhjbdjbhdf 63teh _df_fth/sh*df 0 0 
+next:
+0 2 3 4 5 0 7 0 
+prev:
+0 0 1 2 3 4 -1 -1 
+capacity: 8
+number: -1
+count: 5
+free: 6
+head: 1
+tail: 5
+info:
+0 qwerty asdfg gdfjhdhjbdjbhdf 63teh _df_fth/sh*df 0 0 
+next:
+0 2 3 4 5 0 7 0 
+prev:
+0 0 1 2 3 4 -1 -1 
+capacity: 8
+number: -1
+count: 5
+free: 6
+head: 1
+tail: 5
+info:
+0 qwerty asdfg gdfjhdhjbdjbhdf 63teh _df_fth/sh*df 0 0 
+next:
+0 2 3 4 5 0 7 0 
+prev:
+0 0 1 2 3 4 -1 -1 
+capacity: 8
+number: -1
+count: 5
+free: 6
+head: 1
+tail: 5
+NULL list
+NULL list
+
+next:
+0 2 3 4 5 0 7 0 
+prev:
+0 0 1 2 3 4 -1 -1 
+capacity: 8
+count: 5
+free: 6
+head: 1
+tail: 5

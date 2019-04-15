@@ -1,0 +1,92 @@
+Turbo Assembler	 Version 4.1	    02/17/19 24:38:42	    Page 1
+3.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4	      =005E		     X = 94
+      5
+      6				     org 100h
+      7
+      8	0100			     start:
+      9	0100  B8 B800				     mov ax, 0b800h
+     10	0103  8E C0				     mov es, ax
+     11	0105  BB 01E0				     mov bx, 3*80*2
+     12	0108  B1 0C				     mov cl, 12
+     13
+     14
+     15	010A				     for_1:
+     16	010A  B8 000F				     mov ax, 000fh
+     17	010D  D3 E0				     shl ax, cl
+     18	010F  25 005E				     and ax, X
+     19	0112  D3 E8				     shr ax, cl
+     20				     ;		     shl ax, 0
+     21
+     22	0114  04 30				     add al, '0'
+     23	0116  26: 88 07				     mov byte ptr es:[bx], al
+     24	0119  26: C6 47	01 4E			     mov byte ptr es:[bx+1], 4eh
+     25
+     26				     ;		     mov al, es:[bx]
+     27	011E  B4 00				     mov ah, 0
+     28	0120  80 C4 39				     add ah, '9'
+     29	0123  3A E0				     cmp ah, al
+     30	0125  7C 03				     jl	print_1
+     31	0127  EB 07 90				     jmp end_print
+     32	012A				     print_1:
+     33	012A  B8 0007				     mov ax, 'A' - '9' - 1
+     34	012D  26: 01 07				     add es:[bx], ax
+     35
+     36
+     37	0130				     end_print:
+     38	0130  83 C3 02				     add bx, 2
+     39	0133  80 E9 04				     sub cl, 4
+     40	0136  B5 00				     mov ch, 0
+     41	0138  3A E9				     cmp ch, cl
+     42	013A  7E CE				     jle for_1
+     43
+     44
+     45
+     46	013C  B8 4C00				     mov ax, 4c00h
+     47	013F  CD 21				     int 21h
+     48
+     49
+     50
+     51				     end start
+Turbo Assembler	 Version 4.1	    02/17/19 24:38:42	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/17/19"
+??FILENAME			  Text	 "3	  "
+??TIME				  Text	 "24:38:42"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 3
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+END_PRINT			  Near	 DGROUP:0130
+FOR_1				  Near	 DGROUP:010A
+PRINT_1				  Near	 DGROUP:012A
+START				  Near	 DGROUP:0100
+X				  Number 005E
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  0141 Word	  Public  CODE
+
