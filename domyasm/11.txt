@@ -1,0 +1,16 @@
+push 4
+sqrt
+out
+push 0.77
+sin
+out
+push 0.77
+cos
+out
+push 0.77
+ctg
+out
+push 0.77
+tg
+out
+end

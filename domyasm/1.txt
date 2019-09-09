@@ -1,0 +1,116 @@
+in
+in
+in
+pop rcx
+pop rbx
+pop rax
+
+push rax
+push 0
+je :1
+	push rbx
+	push rbx
+	mul
+	push 4
+	push rax
+	push rcx
+	mul
+	mul
+	minus
+	pop rdx
+	push 0
+	push rdx
+	je :5
+		push 0
+		push rdx
+		ja :6
+		push rdx
+		sqrt
+		pop rdx
+		push 2
+		pop rgx
+
+		push -1
+		push rbx
+		mul
+		push rdx
+		plus
+		push rax
+		div
+		push 2
+		div
+		pop rex
+
+		push -1
+		push rbx
+		mul
+		push rdx
+		minus
+		push rax
+		div
+		push 2
+		div
+		pop rfx
+
+		jmp :4
+:5
+		push 1
+		pop rgx
+		push -1
+		push rbx
+		mul
+		push rax
+		div
+		push 2
+		div
+		pop rex
+		jmp :4
+
+:1
+	push rbx
+	push 0
+	je :2
+		push 1
+		pop rgx
+		push -1
+		push rcx
+		mul
+		push rbx
+		div
+		pop rex
+	jmp :4
+
+:2
+		push rcx
+		push 0
+		je :3
+:6
+			push 0
+			pop rgx
+			jmp :4
+:3
+			push 3
+			pop rgx
+			jmp :4
+
+
+:4
+push rgx
+out
+push 0
+push rgx
+je :7
+push 3
+push rgx
+je :7
+push 1
+push rgx
+je :8
+push rfx
+out
+:8
+push rex
+out
+
+:7
+end

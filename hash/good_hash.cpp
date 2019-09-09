@@ -3,110 +3,21 @@
 #include "hash_table.cpp"
 //#include "time.h"
 
+#define ASM_MODE_ENABLED ;
 
-int hash1(const char *str)
-{
-    return 0;
-}
 
-int hash2(const char *str)
-{
-    return str[0];
-}
-
-int hash3(const char *str)
-{
-    int sum = 0;
-    int len = strlen(str);
-
-    for (int i = 0; i < len; ++i)
-    {
-        sum += str[i];
-    }
-    return sum;
-}
-
-int hash4(const char *str)
-{
-    return strlen(str);
-}
-
-int hash5(const char *str)
-{
-    return hash3(str) / hash4(str);
-}
-
-int hash6(const char *str)
-{
-    int sum = 0;
-    int len = strlen(str);
-
-    for (int i = 0; i < len; ++i)
-    {
-        sum = ( (sum << 31)|(sum >> 1) ) ^ str[i];
-    }
-    return sum;
-}
-
-int hash7(const char *str)
+int hash_x33(char *str)
 {
     int sum = 0;
 
-
-
-/*
-    char *s = (char*)str;
     
-
-    //int len = strlen(str);
-
-    for (; *s; ++s)
+    for (; *str; ++str)
     {
         sum *= 33;
 
-        sum += *s;
-    }*/
-
-
-    __asm__(".intel_syntax noprefix\n\t"
-                
-            "mov eax, 0\n\t"
-            "mov edx, 0\n\t"
-            
-            "next:\n\t"
-            
-            "mov dl, byte ptr [rcx]\n\t"
-            "cmp dl, 0\n\t"
-            "je end\n\t"
-            
-            "mov ebx, eax\n\t"
-            "shl ebx, 5\n\t"
-            "add eax, ebx\n\t"
-            "add eax, edx\n\t"
-            "inc rcx\n\t"
-            "jmp next\n\t"
-            "end:\n\t"
-            
-            ".att_syntax prefix\n\t"
-            :"=a"(sum)
-            :"c"(str)
-            :"ebx", "edx"
-            );
-        
-
-    //printf("%s %d\n", str, sum);
-    return sum;
-}
-
-int hash8(const char *str)
-{
-    int sum = 0;
-    int len = strlen(str);
-
-    for (int i = 0; i < len; ++i)
-    {
-        sum = sum * 31 + str[i];
+        sum += *str;
     }
+
     return sum;
 }
 
@@ -137,44 +48,11 @@ void clean_text(char *text)
     }
 }
 
-int calc_hash(char *word, int hash_func_num)
-{
-    switch (hash_func_num)
-    {
-        case 1:
-            return hash1(word);
-            break;
-        case 2:
-            return hash2(word);
-            break;
-        case 3:
-            return hash3(word);
-            break;
-        case 4:
-            return hash4(word);
-            break;
-        case 5:
-            return hash5(word);
-            break;
-        case 6:
-            return hash6(word);
-            break;
-        case 7:
-            return hash7(word);
-            break;
-        case 8:
-            return hash8(word);
-            break;
-        default:
-            assert(0);
-    }
-}
 
-void add_str_to_hash_table(hash_table* h_tbl, char *word, int hash_func_num)
+void add_str_to_hash_table(hash_table* h_tbl, char *word)
 {
-    int hash = calc_hash(word, hash_func_num);
+    int hash = hash_x33(word);
 
-    //printf("%d\n", abs(hash % h_tbl->size));
 
     List* cur_list = h_tbl->lists[abs(hash % h_tbl->size)];
     
@@ -185,13 +63,10 @@ void add_str_to_hash_table(hash_table* h_tbl, char *word, int hash_func_num)
             return;
 
     ListAdd(cur_list, word);
-    //printf("added word %s with hash %d\n", word, hash);
-    //printf("%d\n", cur_list->count);
-
     return;
 }
 
-void fill_h_tbl(char *text, hash_table *h_tbl, int hash_func_num)
+void fill_h_tbl(char *text, hash_table *h_tbl)
 {
     char *str = text;
     char word[30] = "";
@@ -201,7 +76,7 @@ void fill_h_tbl(char *text, hash_table *h_tbl, int hash_func_num)
     {
         if (!scan_count)
             break;
-        add_str_to_hash_table(h_tbl, word, hash_func_num);
+        add_str_to_hash_table(h_tbl, word);
         str += scan_count;
 
         strcpy(word, "");
@@ -246,9 +121,42 @@ char MYstrcmp(const char *str1, const char *str2)
     return diff;
 }
 
-void find_word(hash_table *h_tbl, const char *word, int hash_func_num)
+void find_word(hash_table *h_tbl, char *word)
 {
-    int hash = calc_hash((char*)word, hash_func_num);
+    int hash = 0;
+
+
+    #ifdef ASM_MODE_ENABLED
+        
+
+        __asm__(".intel_syntax noprefix\n\t"
+                    
+                "mov eax, 0\n\t"
+                "mov edx, 0\n\t"
+                "mov dl, byte ptr [rcx]\n\t"
+                
+                "next:\n\t"
+                
+                "mov ebx, eax\n\t"
+                "shl ebx, 5\n\t"
+                "add eax, ebx\n\t"
+                "add eax, edx\n\t"
+
+                "inc rcx\n\t"
+                "mov dl, byte ptr [rcx]\n\t"
+                "cmp dl, 0\n\t"
+                "jne next\n\t"
+                
+                ".att_syntax prefix\n\t"
+                :"=a"(hash)
+                :"c"(word)
+                :"ebx", "edx"
+                );
+
+
+    #else
+        hash = hash_x33(word);
+    #endif
         
     List* cur_list = h_tbl->lists[abs(hash % h_tbl->size)];
     int ls_size = cur_list->count;
@@ -264,7 +172,7 @@ void find_word(hash_table *h_tbl, const char *word, int hash_func_num)
     printf("ERROR WORD %s WASN'T FOUND\n", word);
 }
 
-void find_all_words(hash_table *h_tbl, int hash_func_num)
+void find_all_words(hash_table *h_tbl)
 {
     int h_tbl_size = h_tbl->size; 
     for (int i = 0; i < h_tbl_size; ++i)
@@ -273,7 +181,7 @@ void find_all_words(hash_table *h_tbl, int hash_func_num)
             int ls_size = cur_list->count;
 
             for (int ls_pos = 1; ls_pos <= ls_size; ++ls_pos)
-                find_word(h_tbl, cur_list->info[ls_pos], hash_func_num);
+                find_word(h_tbl, cur_list->info[ls_pos]);
         }
 }
 
@@ -297,16 +205,16 @@ int main()
     char *text = read_dict("dict.txt");
     clean_text(text);
 
-    hash_table *h_tbl = (hash_table*)calloc(1, sizeof(List)); 
+    hash_table *h_tbl = (hash_table*)calloc(1, sizeof(hash_table)); 
     hash_tableCtor(h_tbl, h_tbl_size);
-    fill_h_tbl(text, h_tbl, 7);
+    fill_h_tbl(text, h_tbl);
 
-    FILE* out_f = fopen("out7.csv", "w");
-    print_h_tbl(h_tbl, out_f);
-    fclose(out_f);
+    // FILE* out_f = fopen("out7.csv", "w");
+    // print_h_tbl(h_tbl, out_f);
+    // fclose(out_f);
 
-    for (int i = 0; i < 1000; ++i)
-        find_all_words(h_tbl, 7);
+    for (int i = 0; i < 5000; ++i)
+        find_all_words(h_tbl);
     
 
 

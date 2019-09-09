@@ -1,0 +1,32 @@
+in
+push 3
+plus
+pop rcx
+push 1
+pop rbx
+
+call :2
+push rbx
+out
+end
+
+
+:2
+push 0
+push rcx
+je :3
+
+push rcx
+push rbx
+mul
+pop rbx
+
+push rcx
+push 1
+minus
+pop rcx
+
+call :2
+
+:3
+ret

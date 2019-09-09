@@ -208,3 +208,28 @@ void find_word(List_of_list *hash_table, const char *word, int hash_func_num)
     
 }
 
+
+/*__asm__(".intel_syntax noprefix\n\t"
+                    
+                "mov eax, 0\n\t"
+                "mov edx, 0\n\t"
+                
+                "next:\n\t"
+                
+                "mov dl, byte ptr [rcx]\n\t"
+                "cmp dl, 0\n\t"
+                "je end\n\t"
+                
+                "mov ebx, eax\n\t"
+                "shl ebx, 5\n\t"
+                "add eax, ebx\n\t"
+                "add eax, edx\n\t"
+                "inc rcx\n\t"
+                "jmp next\n\t"
+                "end:\n\t"
+                
+                ".att_syntax prefix\n\t"
+                :"=a"(hash)
+                :"c"(word)
+                :"ebx", "edx"
+                );*/

@@ -1,0 +1,58 @@
+
+func:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+00000000004000b0 <.text>:
+  4000b0:	6a 03                	push   0x3
+  4000b2:	41 5e                	pop    r14
+  4000b4:	41 5f                	pop    r15
+  4000b6:	50                   	push   rax
+  4000b7:	52                   	push   rdx
+  4000b8:	4c 89 f8             	mov    rax,r15
+  4000bb:	ba 00 00 00 00       	mov    edx,0x0
+  4000c0:	49 f7 f6             	div    r14
+  4000c3:	49 89 c7             	mov    r15,rax
+  4000c6:	5a                   	pop    rdx
+  4000c7:	58                   	pop    rax
+  4000c8:	41 57                	push   r15
+  4000ca:	41 5e                	pop    r14
+  4000cc:	41 5f                	pop    r15
+  4000ce:	50                   	push   rax
+  4000cf:	52                   	push   rdx
+  4000d0:	4c 89 f8             	mov    rax,r15
+  4000d3:	ba 00 00 00 00       	mov    edx,0x0
+  4000d8:	49 f7 e6             	mul    r14
+  4000db:	49 89 c7             	mov    r15,rax
+  4000de:	5a                   	pop    rdx
+  4000df:	58                   	pop    rax
+  4000e0:	41 57                	push   r15
+  4000e2:	0f 87 48 00 20 00    	ja     0x600130
+  4000e8:	0f 83 42 00 20 00    	jae    0x600130
+  4000ee:	0f 82 3c 00 20 00    	jb     0x600130
+  4000f4:	0f 86 36 00 20 00    	jbe    0x600130
+  4000fa:	0f 84 30 00 20 00    	je     0x600130
+  400100:	e8 2b 00 20 00       	call   0x600130
+  400105:	c3                   	ret    
+  400106:	41 5e                	pop    r14
+  400108:	41 5f                	pop    r15
+  40010a:	4d 39 f7             	cmp    r15,r14
+  40010d:	72 00                	jb     0x40010f
+  40010f:	b8 3c 00 00 00       	mov    eax,0x3c
+  400114:	48 31 ff             	xor    rdi,rdi
+  400117:	0f 05                	syscall 
+
+Disassembly of section .data:
+
+000000000060011c <.data>:
+  60011c:	40 00 40 00          	add    BYTE PTR [rax+0x0],al
+  600120:	40 00 40 00          	add    BYTE PTR [rax+0x0],al
+  600124:	40 00 40 00          	add    BYTE PTR [rax+0x0],al
+  600128:	40 00 40 00          	add    BYTE PTR [rax+0x0],al
+  60012c:	40 00 40 00          	add    BYTE PTR [rax+0x0],al
+  600130:	ea                   	(bad)  
+  600131:	56                   	push   rsi
+  600132:	57                   	push   rdi
+  600133:	69 ff ca cb cc cd    	imul   edi,edi,0xcdcccbca
+  600139:	e9 d1 ff df ff       	jmp    0x40010f

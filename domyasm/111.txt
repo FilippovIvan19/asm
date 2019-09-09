@@ -1,0 +1,21 @@
+in
+call :1
+out
+end
+
+:2
+pop rax
+push rax
+push rax
+mul
+ret
+
+:1
+pop rax
+push rax
+push rax
+push rax
+mul
+mul
+call :2
+ret

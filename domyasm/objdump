@@ -1,0 +1,165 @@
+
+in_out_end:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+00000000004000b0 <.text>:
+  4000b0:	90                   	nop
+  4000b1:	90                   	nop
+  4000b2:	90                   	nop
+  4000b3:	90                   	nop
+  4000b4:	e8 0d 00 00 00       	call   0x4000c6
+  4000b9:	c3                   	ret    
+  4000ba:	e8 ae 00 00 00       	call   0x40016d
+  4000bf:	c3                   	ret    
+  4000c0:	e8 28 01 00 00       	call   0x4001ed
+  4000c5:	c3                   	ret    
+  4000c6:	50                   	push   rax
+  4000c7:	53                   	push   rbx
+  4000c8:	51                   	push   rcx
+  4000c9:	52                   	push   rdx
+  4000ca:	b8 00 00 00 00       	mov    eax,0x0
+  4000cf:	bf 01 00 00 00       	mov    edi,0x1
+  4000d4:	48 be 19 02 60 00 00 	movabs rsi,0x600219
+  4000db:	00 00 00 
+  4000de:	ba 14 00 00 00       	mov    edx,0x14
+  4000e3:	0f 05                	syscall 
+  4000e5:	48 bf 2c 02 60 00 00 	movabs rdi,0x60022c
+  4000ec:	00 00 00 
+  4000ef:	b0 0a                	mov    al,0xa
+  4000f1:	b9 14 00 00 00       	mov    ecx,0x14
+  4000f6:	fd                   	std    
+  4000f7:	f3 ae                	repz scas al,BYTE PTR es:[rdi]
+  4000f9:	48 89 f9             	mov    rcx,rdi
+  4000fc:	48 81 e9 19 02 60 00 	sub    rcx,0x600219
+  400103:	48 83 c1 02          	add    rcx,0x2
+  400107:	48 89 fe             	mov    rsi,rdi
+  40010a:	48 ff c6             	inc    rsi
+  40010d:	48 bf 17 02 60 00 00 	movabs rdi,0x600217
+  400114:	00 00 00 
+  400117:	f3 a4                	rep movs BYTE PTR es:[rdi],BYTE PTR ds:[rsi]
+  400119:	cc                   	int3   
+  40011a:	fc                   	cld    
+  40011b:	48 bb 04 02 60 00 00 	movabs rbx,0x600204
+  400122:	00 00 00 
+  400125:	48 b9 00 00 e8 89 04 	movabs rcx,0x8ac7230489e80000
+  40012c:	23 c7 8a 
+  40012f:	ba 00 00 00 00       	mov    edx,0x0
+  400134:	b8 00 00 00 00       	mov    eax,0x0
+  400139:	8a 03                	mov    al,BYTE PTR [rbx]
+  40013b:	b4 00                	mov    ah,0x0
+  40013d:	2c 30                	sub    al,0x30
+  40013f:	52                   	push   rdx
+  400140:	48 f7 e1             	mul    rcx
+  400143:	5a                   	pop    rdx
+  400144:	48 01 c2             	add    rdx,rax
+  400147:	48 ff c3             	inc    rbx
+  40014a:	48 89 c8             	mov    rax,rcx
+  40014d:	b9 0a 00 00 00       	mov    ecx,0xa
+  400152:	52                   	push   rdx
+  400153:	ba 00 00 00 00       	mov    edx,0x0
+  400158:	48 f7 f1             	div    rcx
+  40015b:	48 89 c1             	mov    rcx,rax
+  40015e:	5a                   	pop    rdx
+  40015f:	48 83 f9 00          	cmp    rcx,0x0
+  400163:	75 cf                	jne    0x400134
+  400165:	49 89 d7             	mov    r15,rdx
+  400168:	5a                   	pop    rdx
+  400169:	59                   	pop    rcx
+  40016a:	5b                   	pop    rbx
+  40016b:	58                   	pop    rax
+  40016c:	c3                   	ret    
+  40016d:	50                   	push   rax
+  40016e:	53                   	push   rbx
+  40016f:	51                   	push   rcx
+  400170:	52                   	push   rdx
+  400171:	4c 89 fa             	mov    rdx,r15
+  400174:	48 bb 2e 02 60 00 00 	movabs rbx,0x60022e
+  40017b:	00 00 00 
+  40017e:	48 b9 00 00 e8 89 04 	movabs rcx,0x8ac7230489e80000
+  400185:	23 c7 8a 
+  400188:	49 89 d6             	mov    r14,rdx
+  40018b:	4c 89 f0             	mov    rax,r14
+  40018e:	ba 00 00 00 00       	mov    edx,0x0
+  400193:	48 f7 f1             	div    rcx
+  400196:	49 89 d6             	mov    r14,rdx
+  400199:	48 83 c0 30          	add    rax,0x30
+  40019d:	88 03                	mov    BYTE PTR [rbx],al
+  40019f:	48 ff c3             	inc    rbx
+  4001a2:	48 89 c8             	mov    rax,rcx
+  4001a5:	ba 00 00 00 00       	mov    edx,0x0
+  4001aa:	b9 0a 00 00 00       	mov    ecx,0xa
+  4001af:	48 f7 f1             	div    rcx
+  4001b2:	48 89 c1             	mov    rcx,rax
+  4001b5:	48 83 f9 01          	cmp    rcx,0x1
+  4001b9:	7d d0                	jge    0x40018b
+  4001bb:	b0 30                	mov    al,0x30
+  4001bd:	48 bf 2e 02 60 00 00 	movabs rdi,0x60022e
+  4001c4:	00 00 00 
+  4001c7:	fc                   	cld    
+  4001c8:	b9 14 00 00 00       	mov    ecx,0x14
+  4001cd:	f3 ae                	repz scas al,BYTE PTR es:[rdi]
+  4001cf:	48 83 e9 02          	sub    rcx,0x2
+  4001d3:	48 ff cf             	dec    rdi
+  4001d6:	b8 01 00 00 00       	mov    eax,0x1
+  4001db:	48 89 ca             	mov    rdx,rcx
+  4001de:	48 89 fe             	mov    rsi,rdi
+  4001e1:	bf 01 00 00 00       	mov    edi,0x1
+  4001e6:	0f 05                	syscall 
+  4001e8:	5a                   	pop    rdx
+  4001e9:	59                   	pop    rcx
+  4001ea:	5b                   	pop    rbx
+  4001eb:	58                   	pop    rax
+  4001ec:	c3                   	ret    
+  4001ed:	b8 3c 00 00 00       	mov    eax,0x3c
+  4001f2:	48 31 ff             	xor    rdi,rdi
+  4001f5:	0f 05                	syscall 
+  4001f7:	90                   	nop
+  4001f8:	90                   	nop
+  4001f9:	90                   	nop
+  4001fa:	90                   	nop
+
+Disassembly of section .data:
+
+00000000006001fc <.data>:
+  6001fc:	fc                   	cld    
+  6001fd:	01 60 00             	add    DWORD PTR [rax+0x0],esp
+  600200:	00 00                	add    BYTE PTR [rax],al
+  600202:	00 00                	add    BYTE PTR [rax],al
+  600204:	30 30                	xor    BYTE PTR [rax],dh
+  600206:	30 30                	xor    BYTE PTR [rax],dh
+  600208:	30 30                	xor    BYTE PTR [rax],dh
+  60020a:	30 30                	xor    BYTE PTR [rax],dh
+  60020c:	30 30                	xor    BYTE PTR [rax],dh
+  60020e:	30 30                	xor    BYTE PTR [rax],dh
+  600210:	30 30                	xor    BYTE PTR [rax],dh
+  600212:	30 30                	xor    BYTE PTR [rax],dh
+  600214:	30 30                	xor    BYTE PTR [rax],dh
+  600216:	30 30                	xor    BYTE PTR [rax],dh
+  600218:	00 0a                	add    BYTE PTR [rdx],cl
+  60021a:	0a 0a                	or     cl,BYTE PTR [rdx]
+  60021c:	0a 0a                	or     cl,BYTE PTR [rdx]
+  60021e:	0a 0a                	or     cl,BYTE PTR [rdx]
+  600220:	0a 0a                	or     cl,BYTE PTR [rdx]
+  600222:	0a 0a                	or     cl,BYTE PTR [rdx]
+  600224:	0a 0a                	or     cl,BYTE PTR [rdx]
+  600226:	0a 0a                	or     cl,BYTE PTR [rdx]
+  600228:	0a 0a                	or     cl,BYTE PTR [rdx]
+  60022a:	0a 0a                	or     cl,BYTE PTR [rdx]
+  60022c:	0a 00                	or     al,BYTE PTR [rax]
+  60022e:	20 20                	and    BYTE PTR [rax],ah
+  600230:	20 20                	and    BYTE PTR [rax],ah
+  600232:	20 20                	and    BYTE PTR [rax],ah
+  600234:	20 20                	and    BYTE PTR [rax],ah
+  600236:	20 20                	and    BYTE PTR [rax],ah
+  600238:	20 20                	and    BYTE PTR [rax],ah
+  60023a:	20 20                	and    BYTE PTR [rax],ah
+  60023c:	20 20                	and    BYTE PTR [rax],ah
+  60023e:	20 20                	and    BYTE PTR [rax],ah
+  600240:	20 20                	and    BYTE PTR [rax],ah
+  600242:	0a 00                	or     al,BYTE PTR [rax]
+  600244:	90                   	nop
+  600245:	90                   	nop
+  600246:	90                   	nop
+  600247:	90                   	nop

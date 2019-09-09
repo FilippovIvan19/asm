@@ -1,0 +1,24 @@
+in
+in
+in
+pop rcx
+pop rbx
+
+:97
+pop rax
+push rax
+out
+push rax
+push rbx
+jae :22
+
+push rax
+push rcx
+plus
+jmp :97
+
+
+
+
+:22
+end
